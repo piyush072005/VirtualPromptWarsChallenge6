@@ -81,7 +81,7 @@ function detectLlmConfig(): LlmSynthesisConfig | null {
     return {
       provider: 'gemini',
       apiKey: geminiKey,
-      model: process.env.GEMINI_MODEL?.trim() || 'gemini-2.5-flash',
+      model: process.env.GEMINI_MODEL?.trim() || 'gemini-flash-latest',
     };
   }
   const openaiKey = process.env.OPENAI_API_KEY?.trim();
@@ -107,9 +107,14 @@ async function callExternalLlm(
 
   try {
     if (config.provider === 'gemini') {
-      const model = encodeURIComponent(config.model ?? 'gemini-2.5-flash');
+      const model = encodeURIComponent(config.model ?? 'gemini-flash-latest');
+      // Netlify AI Gateway injects GOOGLE_GEMINI_BASE_URL; fall back to Google directly.
+      const geminiBase = (
+        process.env.GOOGLE_GEMINI_BASE_URL?.trim() ||
+        'https://generativelanguage.googleapis.com'
+      ).replace(/\/+$/, '');
       const url = new URL(
-        `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`
+        `${geminiBase}/v1beta/models/${model}:generateContent`
       );
       const response = await fetch(url, {
         method: 'POST',
