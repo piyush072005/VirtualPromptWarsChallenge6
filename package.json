@@ -6,14 +6,15 @@
   "description": "AeroShield Family - GenAI-powered Urban Air Quality Assistant for severe winter smog and urban air pollution",
   "scripts": {
     "dev": "node --watch server/index.ts",
-    "dev:client": "vite",
-    "build": "tsc --noEmit && vite build",
+    "dev:client": "node node_modules/vite/bin/vite.js",
+    "build": "node node_modules/typescript/bin/tsc --noEmit && node node_modules/vite/bin/vite.js build",
     "start": "node server/index.ts",
-    "test": "vitest run",
-    "test:watch": "vitest",
-    "lint": "tsc --noEmit"
+    "test": "node node_modules/vitest/vitest.mjs run",
+    "test:watch": "node node_modules/vitest/vitest.mjs",
+    "lint": "node node_modules/typescript/bin/tsc --noEmit"
   },
   "dependencies": {
+    "@netlify/server": "^0.1.6",
     "lucide-react": "^0.511.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",

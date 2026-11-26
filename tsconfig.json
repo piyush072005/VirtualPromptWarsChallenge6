@@ -22,5 +22,5 @@
       "@src/*": ["src/*"]
     }
   },
-  "include": ["src", "server", "shared", "tests", "vite.config.ts", "vitest.config.ts"]
+  "include": ["src", "server", "netlify", "shared", "tests", "vite.config.ts", "vitest.config.ts"]
 }
